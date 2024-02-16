@@ -15,7 +15,7 @@ app.post('/sc', (req, res) => {
   res.send('Success')
 })
 
-cron.schedule("*/15 * * * * *",()=> {
+cron.schedule("*/60 * * * * *",()=> {
     for(var i=0;i<list.length;i++){
        run(list[i].url,list[i].price,list[i].email);
        list[i].timeout--;
