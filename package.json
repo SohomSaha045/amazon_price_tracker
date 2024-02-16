@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^8.1.1",
+    "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.4.4",
-    "nightmare": "^3.0.2"
+    "nightmare": "^3.0.2",
+    "puppeteer": "^22.0.0"
   }
 }
