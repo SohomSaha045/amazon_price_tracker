@@ -10,18 +10,49 @@ app.post('/sc', (req, res) => {
   let url=req.body.url;
   let price=req.body.price;
   let email=req.body.email;
-  let timeout=3
+  // let flag=false;
+  let timeout=60;
   list.push({url,price,email,timeout});  
   res.send('Success')
 })
-
-cron.schedule("*/60 * * * * *",()=> {
-    for(var i=0;i<list.length;i++){
-       run(list[i].url,list[i].price,list[i].email);
-       list[i].timeout--;
-    }
+var output=false;
+cron.schedule(
+  // "0 0 * * *"
+"*/1 * * * *"
+,()=> {
+    
+    // for(let i=0;i<list.length;i++){
+       
+    //    output=run(list[i].url,list[i].price,list[i].email);
+    //    output.then(
+    //     (res)=>{
+    //       console.log(res);
+    //    if(res===true){
+    //     list[i].timeout=0;
+    //    }
+    //    else
+    //    list[i].timeout--;
+    //     }
+    //    );
+    // }
     list = list.filter(function(item) {
-        return item.timeout !== 0
+      output=run(item.url,item.price,item.email);
+       output.then(
+        (res)=>{
+          console.log(res);
+       if(res===true){
+        item.timeout=0;
+       }
+       else
+       item.timeout--;
+
+        console.log(item.timeout);
+        }
+       );
+
+       
+
+        return item.timeout !== 0;
     })
 });
 

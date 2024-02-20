@@ -19,6 +19,7 @@ function sendEmail(subject,body,em){
 
 async function run(url,price,email)
 {
+   
 try {
   // Launch the browser
   const browser = await puppeteer.launch();
@@ -39,15 +40,24 @@ try {
         'Price is low',
         `The price on ${url} has dropped below ${price}`,
         email
-    )
-  }
+    );
+    
+  
   
 
   // Close browser.
   await browser.close();
-}
+  return true;
+
+   }
+   
+   return false;  
+} 
+
 catch(e){
     console.log(e);
-}
+} 
+ 
+
 }
 module.exports={run};
