@@ -6,6 +6,9 @@ require('dotenv').config()
 const port = process.env.PORT || 3000;
 var list=[]
 app.use(express.json())
+app.get('/',(req,res)=>{
+  res.send('Success');
+})
 app.post('/sc', (req, res) => {
   let url=req.body.url;
   let price=req.body.price;
