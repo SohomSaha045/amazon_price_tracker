@@ -1,8 +1,17 @@
 
 const cheerio  = require('cheerio');
 const sgMail=require("@sendgrid/mail");
-const puppeteer = require('puppeteer');
+if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+  const chrome = require("chrome-aws-lambda");
+ const puppeteer = require("puppeteer-core");
+} else {
+  const puppeteer = require("puppeteer");
+}
+// const puppeteer = require('puppeteer');
 sgMail.setApiKey(process.env.api_key);
+
+
+
 
 
 function sendEmail(subject,body,em){
@@ -19,10 +28,20 @@ function sendEmail(subject,body,em){
 
 async function run(url,price,email)
 {
+  let options = {};
+  if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+    options = {
+      args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
+      defaultViewport: chrome.defaultViewport,
+      executablePath: await chrome.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    };
+  }
    
 try {
   // Launch the browser
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch(options);
 
   // Create a page
   const page = await browser.newPage();
