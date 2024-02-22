@@ -2,8 +2,8 @@ const express = require('express')
 const cron = require("node-cron");
 const {run}=require('./sendMail');
 const app = express();
-
-const port = 3000
+require('dotenv').config()
+const port = process.env.PORT || 3000;
 var list=[]
 app.use(express.json())
 app.post('/sc', (req, res) => {

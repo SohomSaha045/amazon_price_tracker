@@ -1,4 +1,4 @@
-require('dotenv').config()
+
 const cheerio  = require('cheerio');
 const sgMail=require("@sendgrid/mail");
 const puppeteer = require('puppeteer');
