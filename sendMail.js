@@ -1,12 +1,12 @@
 
 const cheerio  = require('cheerio');
 const sgMail=require("@sendgrid/mail");
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
+// if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
   const chrome = require("chrome-aws-lambda");
  const puppeteer = require("puppeteer-core");
-} else {
-  const puppeteer = require("puppeteer");
-}
+// } else {
+  // const puppeteer = require("puppeteer");
+// }
 // const puppeteer = require('puppeteer');
 sgMail.setApiKey(process.env.api_key);
 

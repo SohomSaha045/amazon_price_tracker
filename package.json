@@ -19,6 +19,5 @@
     "puppeteer-core": "^6"
   }
   ,"devDependencies": {
-    "puppeteer": "^16.2.0"
   }
 }
