@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000;
 var list=[]
 app.use(express.json())
 app.get('/',(req,res)=>{
-  res.send('Success');
+  res.send('Success baby');
 })
 app.post('/sc', (req, res) => {
   let url=req.body.url;
