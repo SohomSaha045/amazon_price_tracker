@@ -20,8 +20,9 @@ app.post('/sc', (req, res) => {
 })
 var output=false;
 cron.schedule(
-  "0 0 * * *"
-// "*/1 * * * *"
+  // "0 0 * * *"
+  
+"*/1 * * * *"
 ,()=> {
     
     // for(let i=0;i<list.length;i++){
