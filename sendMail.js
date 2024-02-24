@@ -2,12 +2,14 @@
 const cheerio  = require('cheerio');
 const sgMail=require("@sendgrid/mail");
 // if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-  const chrome = require("chrome-aws-lambda");
- const puppeteer = require("puppeteer-core");
+  // const chrome = require("chrome-aws-lambda");
+//  const puppeteer = require("puppeteer-core");
 // } else {
   // const puppeteer = require("puppeteer");
 // }
-// const puppeteer = require('puppeteer');
+require('dotenv').config();
+
+const puppeteer = require('puppeteer');
 sgMail.setApiKey(process.env.api_key);
 
 
@@ -79,4 +81,50 @@ catch(e){
  
 
 }
-module.exports={run};
+const findPrice = async (url) => {
+  try {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await page.goto("https://pricehistory.app/");
+    await page.waitForSelector("#search");
+    await page.type("#search", url);
+    // await page.keyboard.press('Enter');
+    await page.click("#search-submit");
+    await page.waitForSelector(".text-warning");
+
+    // setTimeout(async ()=>{
+    var htmlContent = await page.content();
+    var $ = cheerio.load(htmlContent);
+    var present = $(".ph-pricing-pricing").text();
+    var low = $("td.pb-0.h5.text-warning").text();
+    var average = $("td.pb-0.h5.text-warning").text();
+    var high = $(" td.text-danger").text();
+  
+    // console.log(temp);
+
+    console.log("present: " + present);
+    console.log("low: " + low);
+    console.log("average: " + average);
+    console.log("high: " + high);
+
+    await browser.close();
+    return {
+      present: present,
+      low: low,
+      average: average,
+      high: high,
+      result: true,
+    };
+    // },30000);
+  } catch (e) {
+    console.log(e);
+    return {
+      present: 0,
+      low: 0,
+      average: 0,
+      high: 0,
+      result: false,
+    };
+  }
+};
+module.exports={run,findPrice};
