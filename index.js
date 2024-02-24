@@ -18,6 +18,29 @@ app.post('/sc', (req, res) => {
   list.push({url,price,email,timeout});  
   res.send('Success')
 })
+app.get('/api/corn',(req,res)=>{
+    list = list.filter(function(item) {
+    output=run(item.url,item.price,item.email);
+     output.then(
+      (res)=>{
+        console.log(res);
+     if(res===true){
+      item.timeout=0;
+     }
+     else
+     item.timeout--;
+
+      console.log(item.timeout);
+      }
+     );
+
+     
+
+      return item.timeout !== 0;
+  });
+   res.send("Cron job working");
+
+})
 var output=false;
 cron.schedule(
   // "0 0 * * *"
@@ -39,7 +62,7 @@ cron.schedule(
     //     }
     //    );
     // }
-    list = list.filter(function(item) {
+      list = list.filter(function(item) {
       output=run(item.url,item.price,item.email);
        output.then(
         (res)=>{
