@@ -83,7 +83,7 @@ catch(e){
 }
 const findPrice = async (url) => {
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto("https://pricehistory.app/");
     await page.waitForSelector("#search");
@@ -96,7 +96,7 @@ const findPrice = async (url) => {
     var htmlContent = await page.content();
     var $ = cheerio.load(htmlContent);
     var present = $(".ph-pricing-pricing").text();
-    var low = $("td.pb-0.h5.text-warning").text();
+    var low = $("td.pb-0.h5.text-info").text();
     var average = $("td.pb-0.h5.text-warning").text();
     var high = $(" td.text-danger").text();
   
